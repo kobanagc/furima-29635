@@ -49,7 +49,7 @@
 | city              | string     | null: false,                   |
 | block             | string     | null: false,                   |
 | building          | string     |                                |
-| tell              | string     | null: false, unique: true      |
+| tell              | string     | null: false,                   |
 | purchase(FK)      | references | null: false, foreign_key: true |
 ### Association
 - belongs_to :purchase
