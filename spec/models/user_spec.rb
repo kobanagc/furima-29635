@@ -1,11 +1,10 @@
 require 'rails_helper'
+describe User do
+  before do
+    @user = FactoryBot.build(:user)
+  end
 
-RSpec.describe User, type: :model do
   describe "ユーザー新規登録" do
-    before do
-      @user = User.new(family_name: "あああ",first_name: "いいい",family_name_kana: "アアア",first_name_kana: "イイイ",birth_day: "1990-05-05", nick_name: "test", email: "test@test", password: "Ab0000", password_confirmation: "Ab0000")
-    end
-
     context '新規登録がうまくいくとき' do
       it "全てのカラムが正常であれば登録できる" do
         expect(@user).to be_valid
@@ -20,14 +19,15 @@ RSpec.describe User, type: :model do
       end
 
       it "emailが空では登録できない" do
-        @user = User.new(nick_name: "test", email: "", password: "000000", password_confirmation: "000000")
+        @user.email =  ""
         @user.valid?
         expect(@user.errors.full_messages).to include("Email can't be blank")
       end
 
       it "既存emailは登録できない" do
         @user.save
-        user2 = User.new(family_name: "あああ",first_name: "いいい",family_name_kana: "アアア",first_name_kana: "イイイ",birth_day: "1990-05-05", nick_name: "test", email: "test@test", password: "Ab0000", password_confirmation: "Ab0000")
+        user2 = FactoryBot.build(:user)
+        user2.email = @user.email
         user2.valid?
         expect(user2.errors.full_messages).to include("Email has already been taken")
       end
@@ -115,7 +115,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Birth day can't be blank")
       end
-
     end
   end
 end
