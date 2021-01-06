@@ -25,7 +25,7 @@
 | condition_id            | integer    | null: false,                   |
 | payment_for_shipping_id | integer    | null: false,                   |
 | prefecture_id           | integer    | null: false,                   |
-| number_of_days_id       | integer    | null: false,                   |
+| number_of_day_id       | integer    | null: false,                   |
 | price                   | integer    | null: false,                   |
 ### Association
 - belongs_to :user
