@@ -110,7 +110,7 @@ describe Item do
       end
 
       it 'priceが9999999円より高いと登録できない' do
-        @item.price = 999999999
+        @item.price = 999_999_999
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
