@@ -41,6 +41,12 @@ describe UserPurchase do
         expect(@user_purchase.errors.full_messages).to include("Prefecture can't be blank")
       end
 
+      it '都道府県が1では購入できない' do
+        @user_purchase.prefecture_id = 1
+        @user_purchase.valid?
+        expect(@user_purchase.errors.full_messages).to include("Prefecture must be other than 1")
+      end
+
       it '市区町村が空では購入できない' do
         @user_purchase.city = ''
         @user_purchase.valid?
@@ -66,10 +72,23 @@ describe UserPurchase do
       end
 
       it '電話番号が半角数字10桁もしくは11桁でなければ購入できない' do
-        @user_purchase.tell = 12_345_678
+        @user_purchase.tell = "123456789012"
         @user_purchase.valid?
         expect(@user_purchase.errors.full_messages).to include('Tell is invalid')
       end
+
+      it 'item_idが空では登録できない' do
+        @user_purchase.item_id = ""
+        @user_purchase.valid?
+        expect(@user_purchase.errors.full_messages).to include("Item can't be blank")
+      end
+
+      it 'user_idが空では登録できない' do
+        @user_purchase.user_id = ""
+        @user_purchase.valid?
+        expect(@user_purchase.errors.full_messages).to include("User can't be blank")
+      end
+
     end
   end
 end
