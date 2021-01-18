@@ -9,6 +9,8 @@ class UserPurchase
     validates :block
     validates :tell, format: { with: /\A\d{10,11}\z/ }
     validates :token
+    validates :item_id #アソシエーションを記述すれば参照レコードの存在をrailsが確認しますがフォームオブジェクトではアソシエーションを組まない為
+    validates :user_id #アソシエーションを記述すれば参照レコードの存在をrailsが確認しますがフォームオブジェクトではアソシエーションを組まない為
   end
 
   def save

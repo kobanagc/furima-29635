@@ -9,6 +9,11 @@ describe UserPurchase do
       it '全てのカラムが正常であれば購入できる' do
         expect(@user_purchase).to be_valid
       end
+
+      it '建物名が空でも購入できる' do
+        @user_purchase.building = ""
+        expect(@user_purchase).to be_valid
+      end
     end
 
     context '商品購入がうまくいかないとき' do

@@ -2,13 +2,13 @@ class PurchasesController < ApplicationController
   before_action :purchased_item, only: [:index, :create]
   before_action :authenticate_user!, only: [:index, :create]
   before_action :seller, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
+
   def index
-    @item = Item.find(params[:item_id])
     @user_purchase = UserPurchase.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @user_purchase = UserPurchase.new(purchase_params)
     if @user_purchase.valid?
       pay_item
@@ -38,9 +38,12 @@ class PurchasesController < ApplicationController
     redirect_to root_path if Purchase.find_by(item_id: params[:item_id])
   end
 
-  def seller
-    @item = Item.find(params[:item_id])
-    seller = User.find(@item.user_id)
+  def seller #アソシエーションを組んでいれば@item.user.idでユーザーのidは取得できる
+    seller = User.find(@item.user.id)
     redirect_to root_path if seller.id == current_user.id
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 end
