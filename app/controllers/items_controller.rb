@@ -22,6 +22,7 @@ class ItemsController < ApplicationController
 
   def show
     @user = User.find(@item.user_id)
+    @purchase = Purchase.find_by(item_id: @item.id)
   end
 
   def edit
@@ -49,13 +50,10 @@ class ItemsController < ApplicationController
 
   def ensure_correct_user
     @item = Item.find(params[:id])
-    if @item.user_id != current_user.id
-      redirect_to root_path
-    end
+    redirect_to root_path if @item.user_id != current_user.id
   end
 
   def set_item
     @item = Item.find(params[:id])
   end
-
 end
